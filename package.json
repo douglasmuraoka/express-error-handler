@@ -1,0 +1,28 @@
+{
+  "name": "@douglasmuraoka/express-error-handler",
+  "version": "0.0.2",
+  "description": "Fast, opinionated, minimalist error handler for Express APIs.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "git@github.com:douglasmuraoka/express-error-handler.git",
+  "author": "Douglas Muraoka <douglas.muraoka@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "test": "jest --coverage"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/express": "^4.17.7",
+    "@types/jest": "^26.0.4",
+    "@types/supertest": "^2.0.10",
+    "babel-jest": "^26.1.0",
+    "express": "^4.17.1",
+    "jest": "^26.1.0",
+    "supertest": "^4.0.2",
+    "typescript": "^3.9.7"
+  }
+}
