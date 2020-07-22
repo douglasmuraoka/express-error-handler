@@ -14,6 +14,7 @@ class InvalidUserDataError extends Error {
 
 const express = require('express')
 const errorHandler = require('express-error-handler')
+const mongoose = require('mongoose')
 const app = express()
 
 // And any of your services throws it...
@@ -27,6 +28,24 @@ app.get('/meh', () => {
 
 app.post('/user', () => {
   throw new InvalidUserDataError()
+})
+
+const Cat = mongoose.model('Cat', new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  age: {
+    type: Number,
+    min: 0,
+    max: 9999
+  }
+}))
+
+app.get('/cat', async () => {
+  await new Cat({
+    age: -1
+  }).save()
 })
 
 // You can define this error handler...
@@ -65,6 +84,11 @@ curl http://localhost:3000/meh
 curl -X POST http://localhost:3000/user
 # {"errorCode":666,"message":"Useless data","validation":{"foo":"Oh noes! Obviously required","bar":"Oh noes! Should be bigger than 15 😉"}}
 # StatusCode 400
+
+# It also handles Mongoose validation errors :)
+curl http://localhost:3000/cat
+# {"message":"Operation failed due to invalid data","validation":{"name":"required","age":"minimum value: 0"}}
+# StatusCode 400
 ```
 
 ## Installation
@@ -86,6 +110,7 @@ yarn add express-error-handler
   * STANDARDIZED ERROR RESPONSES
   * A simple way to map all Errors thrown by your Express application to a HTTP statusCode and a simple, but yet, (hopefully) useful JSON response
   * No need to waste your time thinking about API error response patterns
+  * Includes a built-in Mongoose validation error handler! 🙌🏼
 
 ## Quick Start
 

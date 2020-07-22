@@ -1,8 +1,9 @@
 import * as express from 'express'
+import mongooseErrorHandler from './handlers/mongoose'
 
 type ErrorMessageGenerator = (error: Error) => string
 
-interface Validation {
+export interface Validation {
   [field:string]: string
 }
 
@@ -15,7 +16,7 @@ interface ErrorHandlingConfig {
   validate?: ValidationGenerator
 }
 
-interface Config {
+export interface Config {
   [errorName:string]: string | ErrorHandlingConfig | ErrorMessageGenerator | express.RequestHandler | express.ErrorRequestHandler
 }
 
@@ -25,7 +26,13 @@ interface ErrorResponse {
   validation?: Validation
 }
 
-export = (errorMapping: Config): express.ErrorRequestHandler => {
+export const errorHandler = (errorMapping: Config = {}): express.ErrorRequestHandler => {
+  // Adds built-in error handlers 
+  errorMapping = {
+    ...mongooseErrorHandler,
+    ...errorMapping
+  }
+
   return (err, req, res, next) => {
     const errorName = err.constructor.name
     const config = errorMapping[errorName]
@@ -66,3 +73,5 @@ export = (errorMapping: Config): express.ErrorRequestHandler => {
     }
   }
 }
+
+export default errorHandler

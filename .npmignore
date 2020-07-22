@@ -1,2 +1,7 @@
 examples/**/*
+lib/**/*
+test/**/*
+babel.config.js
 coverage
+jest.config.js
+tsconfig.json
