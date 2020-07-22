@@ -1,6 +1,6 @@
 {
   "name": "@douglasmuraoka/express-error-handler",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Fast, opinionated, minimalist error handler for Express APIs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

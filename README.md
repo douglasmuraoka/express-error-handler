@@ -42,10 +42,10 @@ const Cat = mongoose.model('Cat', new mongoose.Schema({
   }
 }))
 
-app.get('/cat', async () => {
-  await new Cat({
+app.get('/cat', (req, res, next) => {
+  new Cat({
     age: -1
-  }).save()
+  }).save().catch(next)
 })
 
 // You can define this error handler...
